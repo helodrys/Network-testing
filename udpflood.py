@@ -1,6 +1,7 @@
 import socket
 import threading
 import time
+import random
 
 # Target server
 TARGET_IP = "127.0.0.1"  # change to server IP if testing on LAN
@@ -24,11 +25,11 @@ lock = threading.Lock()
 done = False
 
 def udp_user(user_id):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
     packet_size = INITIAL_SIZE
     for i in range(PACKETS_PER_USER):
         try:
-            data = b"x" * packet_size
+            data = random._urandom(1024) * packet_size
             sock.sendto(data, (TARGET_IP, TARGET_PORT))
             with lock:
                 stats["total"] += 1
